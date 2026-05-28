@@ -18,4 +18,16 @@ export default defineConfig({
     port: 5173,
     strictPort: false,
   },
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          framer: ['framer-motion', 'motion-dom', 'motion-utils'],
+          lucide: ['lucide-react']
+        },
+      },
+    },
+  },
 });

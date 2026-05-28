@@ -6,14 +6,12 @@ import emailjs from '@emailjs/browser';
 // Define types for form fields
 interface FormState {
   name: string;
-  email: string;
   subject: string;
   message: string;
 }
 
 interface FormErrors {
   name?: string;
-  email?: string;
   subject?: string;
   message?: string;
 }
@@ -37,7 +35,6 @@ const GitHubIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 export default function Contact() {
   const [form, setForm] = useState<FormState>({
     name: '',
-    email: '',
     subject: '',
     message: '',
   });
@@ -63,15 +60,6 @@ export default function Contact() {
 
     if (!form.name.trim()) {
       tempErrors.name = 'Name is required';
-      isValid = false;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!form.email.trim()) {
-      tempErrors.email = 'Email is required';
-      isValid = false;
-    } else if (!emailRegex.test(form.email)) {
-      tempErrors.email = 'Please enter a valid email address';
       isValid = false;
     }
 
@@ -104,7 +92,6 @@ export default function Contact() {
 
     const emailParams = {
       from_name: form.name,
-      from_email: form.email,
       subject: form.subject,
       message: form.message,
       timestamp: new Date().toLocaleString(),
@@ -118,7 +105,7 @@ export default function Contact() {
       try {
         await emailjs.send(serviceId, templateId, emailParams, publicKey);
         setStatus('success');
-        setForm({ name: '', email: '', subject: '', message: '' });
+        setForm({ name: '', subject: '', message: '' });
       } catch (err: any) {
         console.error('EmailJS Error:', err);
         setStatus('error');
@@ -132,7 +119,7 @@ export default function Contact() {
 
       setTimeout(() => {
         setStatus('success');
-        setForm({ name: '', email: '', subject: '', message: '' });
+        setForm({ name: '', subject: '', message: '' });
       }, 1500);
     }
   };
@@ -193,18 +180,18 @@ export default function Contact() {
         {/* 3D Entering & Floating Cards Grid with tightened gap settings */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           
-          {/* CARD 1: CONTACT INFO CARD (Settles on LEFT, enters from RIGHT) */}
+          {/* CARD 1: CONTACT INFO CARD (Settles on LEFT, enters from BELOW) */}
           <motion.div
-            initial={isMobile ? { y: 60, opacity: 0 } : { x: '120%', opacity: 0, rotateY: 35, rotateX: 5 }}
-            whileInView={isMobile ? { y: 0, opacity: 1 } : { x: 0, opacity: 1, rotateY: 0, rotateX: 0 }}
-            viewport={{ once: true, margin: isMobile ? '-40px' : '-100px' }}
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{
               type: 'spring',
               damping: 24,
               stiffness: 70,
               mass: 1.2,
             }}
-            className="hidden lg:flex lg:col-span-5 w-full"
+            className="flex flex-col col-span-1 lg:col-span-5 w-full order-1 lg:order-none"
           >
             {/* Reduced card paddings for tighter look */}
             <div
@@ -301,18 +288,19 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* CARD 2: CONTACT FORM CARD (Settles on RIGHT, enters from LEFT) */}
+          {/* CARD 2: CONTACT FORM CARD (Settles on RIGHT, enters from BELOW) */}
           <motion.div
-            initial={isMobile ? { y: 60, opacity: 0 } : { x: '-120%', opacity: 0, rotateY: -35, rotateX: 5 }}
-            whileInView={isMobile ? { y: 0, opacity: 1 } : { x: 0, opacity: 1, rotateY: 0, rotateX: 0 }}
-            viewport={{ once: true, margin: isMobile ? '-40px' : '-100px' }}
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{
               type: 'spring',
               damping: 24,
               stiffness: 70,
               mass: 1.2,
+              delay: 0.1
             }}
-            className="col-span-12 lg:col-span-7 flex w-full"
+            className="flex flex-col col-span-1 lg:col-span-7 w-full order-2 lg:order-none"
           >
             {/* Reduced card paddings for tighter look */}
             <div
@@ -389,49 +377,26 @@ export default function Contact() {
                         </div>
                       )}
 
-                      {/* Name & Email Group */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="text-left">
-                          <label className="block text-[9px] font-bold font-mono tracking-widest text-zinc-500 uppercase mb-1.5">
-                            Name Signature
-                          </label>
-                          <input
-                            type="text"
-                            name="name"
-                            value={form.name}
-                            onChange={handleInputChange}
-                            placeholder="Alex Mercer"
-                            className={`w-full px-3.5 py-2.5 rounded-lg bg-zinc-900/30 border text-zinc-150 text-sm font-sans focus:outline-none focus:bg-zinc-900/60 focus:ring-1 focus:ring-zinc-500/30 transition-all placeholder-zinc-700 ${errors.name ? 'border-rose-500/40 focus:border-rose-500' : 'border-zinc-900 focus:border-zinc-500/50'
-                              }`}
-                            disabled={status === 'loading'}
-                          />
-                          {errors.name && (
-                            <p className="mt-1 text-[9px] font-bold font-mono text-rose-500/80 uppercase">
-                              {errors.name}
-                            </p>
-                          )}
-                        </div>
-
-                        <div className="text-left">
-                          <label className="block text-[9px] font-bold font-mono tracking-widest text-zinc-500 uppercase mb-1.5">
-                            Email Gateway
-                          </label>
-                          <input
-                            type="email"
-                            name="email"
-                            value={form.email}
-                            onChange={handleInputChange}
-                            placeholder="alex@domain.com"
-                            className={`w-full px-3.5 py-2.5 rounded-lg bg-zinc-900/30 border text-zinc-150 text-sm font-sans focus:outline-none focus:bg-zinc-900/60 focus:ring-1 focus:ring-zinc-500/30 transition-all placeholder-zinc-700 ${errors.email ? 'border-rose-500/40 focus:border-rose-500' : 'border-zinc-900 focus:border-zinc-500/50'
-                              }`}
-                            disabled={status === 'loading'}
-                          />
-                          {errors.email && (
-                            <p className="mt-1 text-[9px] font-bold font-mono text-rose-500/80 uppercase">
-                              {errors.email}
-                            </p>
-                          )}
-                        </div>
+                      {/* Name Group */}
+                      <div className="text-left">
+                        <label className="block text-[9px] font-bold font-mono tracking-widest text-zinc-500 uppercase mb-1.5">
+                          Name Signature
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={form.name}
+                          onChange={handleInputChange}
+                          placeholder="Alex Mercer"
+                          className={`w-full px-3.5 py-2.5 rounded-lg bg-zinc-900/30 border text-zinc-150 text-sm font-sans focus:outline-none focus:bg-zinc-900/60 focus:ring-1 focus:ring-zinc-500/30 transition-all placeholder-zinc-700 ${errors.name ? 'border-rose-500/40 focus:border-rose-500' : 'border-zinc-900 focus:border-zinc-500/50'
+                            }`}
+                          disabled={status === 'loading'}
+                        />
+                        {errors.name && (
+                          <p className="mt-1 text-[9px] font-bold font-mono text-rose-500/80 uppercase">
+                            {errors.name}
+                          </p>
+                        )}
                       </div>
 
                       {/* Subject */}
