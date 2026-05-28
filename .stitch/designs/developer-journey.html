@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ARCHITECT.LOG | Developer Journey</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(173, 198, 255, 0.3);
+        }
+        .timeline-line-bg {
+            background: rgba(255, 255, 255, 0.05);
+            width: 1px;
+        }
+        .timeline-line-progress {
+            background: linear-gradient(to bottom, #adc6ff 0%, #38485d 100%);
+            width: 1px;
+            height: 0%;
+            transition: height 0.1s ease-out;
+        }
+        .skill-chip {
+            background: rgba(173, 198, 255, 0.1);
+            border: 1px solid rgba(173, 198, 255, 0.2);
+        }
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(173, 198, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(173, 198, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(173, 198, 255, 0); }
+        }
+        .pulse-active {
+            animation: pulse-blue 2s infinite;
+        }
+        .milestone-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out, margin 0.4s ease-in-out;
+            opacity: 0;
+            margin-top: 0;
+        }
+        .milestone-expanded .milestone-content {
+            max-height: 1200px;
+            opacity: 1;
+            margin-top: 16px;
+        }
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        .float-delay-1 { animation-delay: 1s; }
+        .float-delay-2 { animation-delay: 2s; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#d8e2ff",
+                        "inverse-primary": "#005ac2",
+                        "on-secondary-fixed": "#0b1c30",
+                        "background": "#131313",
+                        "on-secondary-container": "#a9bad3",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-container": "#00285d",
+                        "surface-container-high": "#2a2a2a",
+                        "on-primary-fixed": "#001a42",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary": "#002e6a",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-variant": "#353534",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#e5e2e1",
+                        "primary-fixed-dim": "#adc6ff",
+                        "tertiary-container": "#df7412",
+                        "surface-container": "#201f1f",
+                        "surface-tint": "#adc6ff",
+                        "secondary": "#b7c8e1",
+                        "on-background": "#e5e2e1",
+                        "tertiary": "#ffb786",
+                        "outline": "#8c909f",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-surface-variant": "#c2c6d6",
+                        "outline-variant": "#424754",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "inverse-on-surface": "#313030",
+                        "secondary-fixed": "#d3e4fe",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-container": "#4d8eff",
+                        "error-container": "#93000a",
+                        "primary": "#adc6ff",
+                        "surface-container-highest": "#353534",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-tertiary-fixed": "#311400",
+                        "error": "#ffb4ab",
+                        "on-secondary": "#213145",
+                        "secondary-container": "#3a4a5f",
+                        "surface-dim": "#131313",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "surface": "#131313",
+                        "on-tertiary-container": "#461f00",
+                        "surface-bright": "#393939",
+                        "on-tertiary": "#502400"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-md": "24px",
+                        "section-gap": "120px",
+                        "stack-lg": "48px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "unit": "8px",
+                        "container-max": "1120px",
+                        "stack-sm": "12px"
+                    },
+                    "fontFamily": {
+                        "label-mono": ["JetBrains Mono"],
+                        "caption": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-mono": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary/30 overflow-x-hidden">
+<!-- Top Navigation Anchor -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5 shadow-2xl shadow-black/40">
+<div class="flex items-center justify-between px-margin-mobile h-16 max-w-container-max mx-auto">
+<div class="flex items-center gap-2 cursor-pointer active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<span class="font-label-mono text-label-mono font-bold tracking-tighter text-primary">ARCHITECT.LOG</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors" href="#">Stack</a>
+<a class="font-label-mono text-label-mono text-primary" href="#">Journey</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors" href="#">Lab</a>
+</div>
+<div class="cursor-pointer active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-40 px-margin-mobile max-w-container-max mx-auto">
+<header class="max-w-[680px] mx-auto text-center mb-stack-lg md:mb-section-gap">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-stack-sm">Technical Evolution</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">An architectural trace of specialized competencies and developmental milestones.</p>
+</header>
+<!-- Timeline Section -->
+<div class="relative max-w-[800px] mx-auto" id="timeline-container">
+<!-- Central Line Background -->
+<div class="absolute left-4 md:left-1/2 top-0 bottom-0 timeline-line-bg -translate-x-1/2"></div>
+<!-- Central Line Progress -->
+<div class="absolute left-4 md:left-1/2 top-0 timeline-line-progress -translate-x-1/2" id="scroll-progress-line"></div>
+<div class="space-y-stack-lg">
+<!-- Milestone 1: Completed -->
+<div class="relative flex flex-col md:flex-row items-start md:items-center group reveal-on-scroll milestone-node" onclick="toggleMilestone(this)">
+<div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary z-10 border-4 border-background transition-transform duration-300 group-hover:scale-125"></div>
+<div class="ml-12 md:ml-0 md:w-1/2 md:pr-16 text-right hidden md:block">
+<span class="font-label-mono text-label-mono text-primary opacity-60">Q3 2022</span>
+</div>
+<div class="ml-12 md:ml-16 w-full md:w-1/2">
+<div class="glass-card p-stack-md rounded-xl cursor-pointer">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface">Frontend Development</h3>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="milestone-content">
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-sm">Core proficiency in building high-performance, accessible user interfaces with modern frameworks.</p>
+<div class="flex flex-wrap gap-2 mb-stack-md">
+<span class="skill-chip px-3 py-1 rounded-full font-label-mono text-caption text-primary float-animation">React</span>
+<span class="skill-chip px-3 py-1 rounded-full font-label-mono text-caption text-primary float-animation float-delay-1">TypeScript</span>
+<span class="skill-chip px-3 py-1 rounded-full font-label-mono text-caption text-primary float-animation float-delay-2">Tailwind CSS</span>
+<span class="skill-chip px-3 py-1 rounded-full font-label-mono text-caption text-primary float-animation">Next.js</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="aspect-video bg-surface-container rounded-lg overflow-hidden relative">
+<img alt="Cert" class="w-full h-full object-cover opacity-50" data-alt="A macro shot of a sleek, dark-themed digital certificate displayed on a high-resolution laptop screen." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhmlJs4xcW7MxvqzNsuAN8xaXLTLFmAstlKd79czR4_RlIYwb8S25r8KRfbEKtrVaOIaLgNj9RC0C3JHa-E5Kjijo3a1KczkVOIIw6d4Mc6-eseG_XnPmVHsA5PYQVO50m-tso0uOH9fm05uh1m0m1el7R_9ol08V__3ELkGAPbLZRAmMFe6IYlzi2gPNdIndCZCimSefGck5c9EZPr2_oj04bOTHon6l28B_5JxeN3XMR-RHN0oIW67m1UwMnxJg8WNtk2eLGCRk"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-label-mono text-caption uppercase tracking-widest text-white/40">Credential #2941</span>
+</div>
+</div>
+<div class="aspect-video bg-surface-container rounded-lg flex items-center justify-center p-4">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">verified_user</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Milestone 2: Currently Learning -->
+<div class="relative flex flex-col md:flex-row-reverse items-start md:items-center group milestone-expanded reveal-on-scroll milestone-node" onclick="toggleMilestone(this)">
+<div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary z-10 border-4 border-background pulse-active"></div>
+<div class="ml-12 md:ml-0 md:w-1/2 md:pl-16 text-left hidden md:block">
+<span class="font-label-mono text-label-mono text-primary">IN PROGRESS</span>
+</div>
+<div class="ml-12 md:mr-16 w-full md:w-1/2">
+<div class="glass-card p-stack-md rounded-xl cursor-pointer border-primary/20 bg-primary/5">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-primary">AI &amp; Generative Web</h3>
+<span class="material-symbols-outlined text-primary animate-spin" style="font-variation-settings: 'wght' 200;">progress_activity</span>
+</div>
+<div class="milestone-content">
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-sm">Integrating Large Language Models and diffusion architectures into production web environments.</p>
+<div class="w-full bg-surface-container-high h-1 rounded-full mb-stack-md overflow-hidden">
+<div class="h-full bg-primary shadow-[0_0_8px_rgba(173,198,255,0.8)] w-[65%] transition-all duration-1000"></div>
+</div>
+<div class="space-y-stack-sm">
+<div class="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5 float-animation">
+<span class="material-symbols-outlined text-primary">psychology</span>
+<div>
+<div class="font-label-mono text-caption text-on-surface">Prompt Engineering Mastery</div>
+<div class="font-caption text-caption text-on-surface-variant">DeepLearning.AI</div>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5 float-animation float-delay-1">
+<span class="material-symbols-outlined text-primary">hub</span>
+<div>
+<div class="font-label-mono text-caption text-on-surface">LangChain Architectures</div>
+<div class="font-caption text-caption text-on-surface-variant">Self-Paced Specialization</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Milestone 3: Completed -->
+<div class="relative flex flex-col md:flex-row items-start md:items-center group reveal-on-scroll milestone-node" onclick="toggleMilestone(this)">
+<div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary z-10 border-4 border-background transition-transform duration-300 group-hover:scale-125"></div>
+<div class="ml-12 md:ml-0 md:w-1/2 md:pr-16 text-right hidden md:block">
+<span class="font-label-mono text-label-mono text-primary opacity-60">Q1 2021</span>
+</div>
+<div class="ml-12 md:ml-16 w-full md:w-1/2">
+<div class="glass-card p-stack-md rounded-xl cursor-pointer">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface">Programming &amp; Logic</h3>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="milestone-content">
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-sm">Foundational algorithms, data structures, and object-oriented design patterns.</p>
+<div class="flex gap-4">
+<div class="flex-1 p-3 rounded-lg bg-surface-container text-center float-animation">
+<div class="font-label-mono text-headline-md text-primary">500+</div>
+<div class="font-caption text-caption text-on-surface-variant">LeetCode Pbs</div>
+</div>
+<div class="flex-1 p-3 rounded-lg bg-surface-container text-center float-animation float-delay-2">
+<div class="font-label-mono text-headline-md text-primary">Java</div>
+<div class="font-caption text-caption text-on-surface-variant">Core Language</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Milestone 4: Locked -->
+<div class="relative flex flex-col md:flex-row-reverse items-start md:items-center opacity-40 group grayscale hover:grayscale-0 transition-all duration-500 reveal-on-scroll milestone-node" onclick="toggleMilestone(this)">
+<div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-on-secondary-fixed-variant z-10 border-4 border-background"></div>
+<div class="ml-12 md:ml-0 md:w-1/2 md:pl-16 text-left hidden md:block">
+<span class="font-label-mono text-label-mono text-on-surface-variant">UPCOMING</span>
+</div>
+<div class="ml-12 md:mr-16 w-full md:w-1/2">
+<div class="glass-card p-stack-md rounded-xl border-dashed cursor-pointer">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface-variant">Backend Development</h3>
+<span class="material-symbols-outlined text-on-surface-variant">lock</span>
+</div>
+<div class="milestone-content">
+<p class="font-body-md text-body-md text-on-surface-variant">Future focus on distributed systems, microservices architecture, and cloud-native infrastructure.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Milestone 5: Locked -->
+<div class="relative flex flex-col md:flex-row items-start md:items-center opacity-25 group grayscale reveal-on-scroll milestone-node" onclick="toggleMilestone(this)">
+<div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-on-secondary-fixed-variant z-10 border-4 border-background"></div>
+<div class="ml-12 md:ml-0 md:w-1/2 md:pr-16 text-right hidden md:block">
+<span class="font-label-mono text-label-mono text-on-surface-variant">FUTURE</span>
+</div>
+<div class="ml-12 md:ml-16 w-full md:w-1/2">
+<div class="glass-card p-stack-md rounded-xl border-dashed cursor-pointer">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface-variant">Advanced Databases</h3>
+<span class="material-symbols-outlined text-on-surface-variant">lock</span>
+</div>
+<div class="milestone-content">
+<p class="font-body-md text-body-md text-on-surface-variant">Specialization in high-availability data architectures and vector search engines.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden bg-surface-container-lowest/80 backdrop-blur-md border-t border-white/5 shadow-2xl shadow-black/60">
+<div class="flex justify-around items-center h-20 pb-safe px-4">
+<div class="flex flex-col items-center justify-center text-on-secondary-fixed-variant hover:bg-white/5 transition-all active:scale-90">
+<span class="material-symbols-outlined">layers</span>
+<span class="font-label-mono text-label-mono">Stack</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary bg-primary/10 rounded-xl px-4 py-1 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">timeline</span>
+<span class="font-label-mono text-label-mono">Journey</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-secondary-fixed-variant hover:bg-white/5 transition-all active:scale-90">
+<span class="material-symbols-outlined">science</span>
+<span class="font-label-mono text-label-mono">Lab</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-secondary-fixed-variant hover:bg-white/5 transition-all active:scale-90">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-label-mono text-label-mono">Future</span>
+</div>
+</div>
+</nav>
+<script>
+    function toggleMilestone(element) {
+        // Prevent expanding locked items if desired, but here we allow it for consistency
+        const isExpanded = element.classList.contains('milestone-expanded');
+        
+        // Close all other expanded milestones
+        document.querySelectorAll('.milestone-node').forEach(node => {
+            if (node !== element) {
+                node.classList.remove('milestone-expanded');
+            }
+        });
+
+        // Toggle the clicked one
+        if (!isExpanded) {
+            element.classList.add('milestone-expanded');
+            // Ensure the element is visible after expansion
+            setTimeout(() => {
+                element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 500);
+        } else {
+            element.classList.remove('milestone-expanded');
+        }
+    }
+
+    // Scroll Logic
+    const progressLine = document.getElementById('scroll-progress-line');
+    const reveals = document.querySelectorAll('.reveal-on-scroll');
+    const timelineContainer = document.getElementById('timeline-container');
+
+    function handleScroll() {
+        // Timeline Progress Line Growth
+        const rect = timelineContainer.getBoundingClientRect();
+        const winHeight = window.innerHeight;
+        
+        // Calculate how much of the timeline is "active" based on viewport center
+        const containerTop = rect.top;
+        const containerHeight = rect.height;
+        const scrollPos = (winHeight / 2) - containerTop;
+        let progress = (scrollPos / containerHeight) * 100;
+        progress = Math.max(0, Math.min(100, progress));
+        progressLine.style.height = `${progress}%`;
+
+        // Card Reveal Logic
+        reveals.forEach(el => {
+            const revealTop = el.getBoundingClientRect().top;
+            const revealPoint = 150;
+            if (revealTop < winHeight - revealPoint) {
+                el.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('load', handleScroll);
+
+    // Particles background logic
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.opacity = '0.3';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function initParticles() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        particles = [];
+        for(let i = 0; i < 40; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2 + 0.5,
+                speed: Math.random() * 0.4 + 0.1,
+                opacity: Math.random() * 0.5 + 0.2
+            });
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#38485d';
+        particles.forEach(p => {
+            p.y -= p.speed;
+            if(p.y < 0) p.y = canvas.height;
+            ctx.globalAlpha = p.opacity;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+
+    window.addEventListener('resize', initParticles);
+    initParticles();
+    animateParticles();
+</script>
+</body></html>

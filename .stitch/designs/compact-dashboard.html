@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Architect Log | Developer Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#502400",
+                        "primary": "#adc6ff",
+                        "outline": "#8c909f",
+                        "error-container": "#93000a",
+                        "tertiary": "#ffb786",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-highest": "#353534",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#001a42",
+                        "primary-fixed-dim": "#adc6ff",
+                        "primary-fixed": "#d8e2ff",
+                        "tertiary-container": "#df7412",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary-container": "#00285d",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "on-primary-fixed-variant": "#004395",
+                        "background": "#131313",
+                        "secondary-container": "#3a4a5f",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary": "#002e6a",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "inverse-primary": "#005ac2",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#b7c8e1",
+                        "on-background": "#e5e2e1",
+                        "outline-variant": "#424754",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-secondary": "#213145",
+                        "surface-tint": "#adc6ff",
+                        "surface-bright": "#393939",
+                        "surface": "#131313",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "surface-dim": "#131313",
+                        "on-error": "#690005",
+                        "surface-variant": "#353534",
+                        "surface-container": "#201f1f",
+                        "inverse-on-surface": "#313030",
+                        "primary-container": "#4d8eff",
+                        "on-secondary-container": "#a9bad3",
+                        "on-tertiary-fixed": "#311400",
+                        "on-tertiary-container": "#461f00",
+                        "on-surface": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-lg": "48px",
+                        "margin-mobile": "20px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "section-gap": "120px",
+                        "stack-sm": "12px",
+                        "stack-md": "24px",
+                        "container-max": "1120px"
+                    },
+                    "fontFamily": {
+                        "label-mono": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "caption": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-mono": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(173, 198, 255, 0.3);
+        }
+        .neon-text-shadow {
+            text-shadow: 0 0 8px rgba(173, 198, 255, 0.4);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #353534;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full bg-surface/60 backdrop-blur-xl border-b border-outline-variant/30 shadow-[0_20px_40px_rgba(0,0,0,0.4)] z-50">
+<div class="flex items-center justify-between px-margin-mobile md:px-gutter max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-stack-sm cursor-pointer active:scale-95 transition-colors text-primary">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-label-mono text-label-mono tracking-widest text-primary">ARCHITECT.LOG</span>
+</div>
+<div class="text-on-surface-variant hover:bg-white/5 transition-colors cursor-pointer active:scale-95 p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="pt-24 pb-32 px-margin-mobile max-w-container-max mx-auto min-h-screen">
+<!-- Welcome Section -->
+<section class="mb-stack-lg">
+<h2 class="font-display-lg-mobile text-display-lg-mobile mb-2">Systems Online</h2>
+<p class="text-on-surface-variant font-label-mono text-sm uppercase tracking-tighter italic">V2.4.0 Deployment Active</p>
+</section>
+<!-- Tech Stack Section -->
+<section class="mb-stack-lg">
+<div class="flex items-center gap-2 mb-stack-md">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="memory">memory</span>
+<h3 class="font-headline-md text-headline-md uppercase tracking-tight">Tech Stack</h3>
+</div>
+<div class="space-y-stack-sm">
+<!-- Frontend -->
+<div class="glass-card p-stack-md rounded-xl transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-mono text-xs text-primary uppercase tracking-widest">Frontend</span>
+<span class="material-symbols-outlined text-primary/40 text-lg" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full font-label-mono text-[11px] text-primary">React.js</span>
+<span class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full font-label-mono text-[11px] text-primary">Tailwind CSS</span>
+<span class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full font-label-mono text-[11px] text-primary">TypeScript</span>
+<span class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full font-label-mono text-[11px] text-primary">Next.js</span>
+</div>
+</div>
+<!-- Data -->
+<div class="glass-card p-stack-md rounded-xl transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-mono text-xs text-primary uppercase tracking-widest">Data</span>
+<span class="material-symbols-outlined text-primary/40 text-lg" data-icon="database">database</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full font-label-mono text-[11px] text-primary">PostgreSQL</span>
+<span class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full font-label-mono text-[11px] text-primary">Redis</span>
+<span class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full font-label-mono text-[11px] text-primary">GraphQL</span>
+</div>
+</div>
+<!-- Foundations -->
+<div class="glass-card p-stack-md rounded-xl transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-mono text-xs text-primary uppercase tracking-widest">Foundations</span>
+<span class="material-symbols-outlined text-primary/40 text-lg" data-icon="architecture">architecture</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full font-label-mono text-[11px] text-primary">Docker</span>
+<span class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full font-label-mono text-[11px] text-primary">AWS</span>
+<span class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full font-label-mono text-[11px] text-primary">Kubernetes</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Project Showcase -->
+<section>
+<div class="flex items-center gap-2 mb-stack-md">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="layers">layers</span>
+<h3 class="font-headline-md text-headline-md uppercase tracking-tight">Projects</h3>
+</div>
+<div class="space-y-stack-md">
+<!-- Project 1 -->
+<div class="group glass-card rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1">
+<div class="relative aspect-video w-full overflow-hidden">
+<img alt="Server Cluster" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A high-tech server room with glowing blue LED racks reflecting off a polished dark floor. The atmosphere is quiet and futuristic, emphasizing data infrastructure and power. The shot is captured from a low angle with cinematic lighting that highlights the intricate wiring and modular hardware design. Deep charcoal and cyan primary tones dominate the visual landscape." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0kLShrUm5f4LE6TBsrYFWAgnj7fSBeCW38RnSas_ooXtbBfmngfrL9MAf0LWiBZZBbJ-O_bNFcJtSu1m3fKnP_CVNJeX_VbvjrtQRlUhPGeyCjWK2sMgnNpmUetcsYY_0jhwgC5NutyqnGc2Unm9NJUEA2MXgFekv2DndnboBqSWoHci2U2_lYVaeLq3LkURgYoyFnXwRTHeA3n43Ine6xf-B3ZR3S_3FLMEju2M0k7oDYluUKrOihfUXnJzlt2YRYzIeAtR2Sck"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+</div>
+<div class="p-stack-md">
+<h4 class="font-headline-md text-lg mb-2 group-hover:text-primary transition-colors">Quantum Mesh V2</h4>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">High-performance distributed computing layer for neural network orchestration and real-time inference.</p>
+<div class="flex flex-wrap gap-2">
+<span class="font-label-mono text-[10px] text-on-surface-variant/60 border border-outline-variant/30 px-2 py-0.5 rounded">Rust</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant/60 border border-outline-variant/30 px-2 py-0.5 rounded">gRPC</span>
+</div>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="group glass-card rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1">
+<div class="relative aspect-video w-full overflow-hidden">
+<img alt="Code Abstraction" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A close-up artistic representation of abstract digital code and logic structures visualized as floating light particles in a dark void. Neon blue lines connect various nodes, forming a complex web of information. The lighting is ethereal and focused, creating a sense of depth and intelligence. The style is professional and minimalist, strictly adhering to a dark mode aesthetic with high-end glass-like textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVNaj3owyHzS83mgrC65UvYSyExxGml2_YBiAqQdMbws9xe1SPUlcTsS2i-nks5GqrwdCADXnsw-ItCqMcYaY2Uv5nCnvq27NMLDSTLD3sZHOBzK0tFeFAKvJfj0_-XuYe255i9VScea06N2AHWoAiuuczBOoJxztb0KKdSSi52SriIeEBF00t7nMDCR4vI9zYVe36Jhlmdz7io73pwJGnLwApqX4zFRX5OjBgEtW9fKs-rpaPV5_uBHi-GJDP3qvPGIlP7GeABwE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+</div>
+<div class="p-stack-md">
+<h4 class="font-headline-md text-lg mb-2 group-hover:text-primary transition-colors">Synthetic UI Core</h4>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">A library of hyper-responsive, glassmorphic components optimized for low-latency developer interfaces.</p>
+<div class="flex flex-wrap gap-2">
+<span class="font-label-mono text-[10px] text-on-surface-variant/60 border border-outline-variant/30 px-2 py-0.5 rounded">React</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant/60 border border-outline-variant/30 px-2 py-0.5 rounded">Framer Motion</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface-container/30 backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary/80 transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-caption text-caption mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary/80 transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+<span class="font-caption text-caption mt-1">Projects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-primary/10 rounded-xl p-2 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="terminal" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span class="font-caption text-caption mt-1">Stack</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary/80 transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-caption text-caption mt-1">Stats</span>
+</a>
+</nav>
+<!-- Visual Polish: Subtle Atmospheric Background -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-20">
+<div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-primary/10 blur-[120px]"></div>
+<div class="absolute bottom-[-5%] left-[-10%] w-[300px] h-[300px] rounded-full bg-secondary/5 blur-[80px]"></div>
+</div>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Add a subtle scanline effect to the "terminal" feel
+        const scanline = document.createElement('div');
+        scanline.style.position = 'fixed';
+        scanline.style.top = '0';
+        scanline.style.left = '0';
+        scanline.style.width = '100%';
+        scanline.style.height = '100%';
+        scanline.style.background = 'linear-gradient(to bottom, transparent 50%, rgba(173, 198, 255, 0.005) 50%)';
+        scanline.style.backgroundSize = '100% 4px';
+        scanline.style.pointerEvents = 'none';
+        scanline.style.zIndex = '100';
+        document.body.appendChild(scanline);
+    </script>
+</body></html>
